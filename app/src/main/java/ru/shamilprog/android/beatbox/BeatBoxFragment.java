@@ -16,8 +16,17 @@ import ru.shamilprog.android.beatbox.databinding.ListItemSoundBinding;
 
 public class BeatBoxFragment extends Fragment {
 
+    private  BeatBox mBeatBox;
+
     public static BeatBoxFragment newInstance() {
         return new BeatBoxFragment();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        mBeatBox = new BeatBox(getActivity());
     }
 
     @Nullable
