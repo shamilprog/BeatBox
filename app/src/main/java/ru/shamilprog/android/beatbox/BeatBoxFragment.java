@@ -10,6 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -19,6 +21,8 @@ import ru.shamilprog.android.beatbox.databinding.ListItemSoundBinding;
 public class BeatBoxFragment extends Fragment {
 
     private BeatBox mBeatBox;
+    private SeekBar mVolumeSeekBar;
+    private TextView mSpeedTextView;
 
     public static BeatBoxFragment newInstance() {
         return new BeatBoxFragment();
@@ -42,6 +46,30 @@ public class BeatBoxFragment extends Fragment {
         binding.recyclerView.setAdapter(new SoundAdapter(mBeatBox.getSounds()));
 
         return binding.getRoot();
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mSpeedTextView = (TextView) (getActivity()).findViewById(R.id.textView);
+        mVolumeSeekBar = (SeekBar) (getActivity()).findViewById(R.id.play_speed_seekbar);
+        mVolumeSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                mBeatBox.setVolumeGain(progress / 100.0f);
+                mSpeedTextView.setText("Playback speed: " + progress + "%");
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
     }
 
     @Override
